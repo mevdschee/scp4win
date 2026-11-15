@@ -66,19 +66,6 @@ func sha(s string) string {
 	return hex.EncodeToString(h[:])
 }
 
-// hashFiles lists hash files (as SSH-Cloud before v0.3 wrote) below the root.
-func hashFiles(t *testing.T, srv *sshtest.Server) []string {
-	t.Helper()
-	var found []string
-	filepath.WalkDir(srv.Root, func(p string, d os.DirEntry, err error) error {
-		if err == nil && strings.HasSuffix(d.Name(), ".sha256") {
-			found = append(found, p)
-		}
-		return nil
-	})
-	return found
-}
-
 func conflictReason(t *testing.T, err error) Reason {
 	t.Helper()
 	var ce *ConflictError
@@ -120,9 +107,6 @@ func TestUploadNewFileRecordsVersion(t *testing.T) {
 	last, ok := a.e.log.Latest("docs/report.docx")
 	if !ok || last.Size != 2 || last.Mtime != fi.ModTime().Unix() || last.Hash != sha("v1") {
 		t.Fatalf("transfer list should record the server version, got %+v", last)
-	}
-	if found := hashFiles(t, srv); len(found) != 0 {
-		t.Fatalf("no hash files may be written: %v", found)
 	}
 	if left := internalFiles(t, srv); len(left) != 0 {
 		t.Fatalf("leftover files: %v", left)
@@ -331,7 +315,6 @@ func TestOutsideChangeIsDetected(t *testing.T) {
 func TestDownloadRecordsVersionAndWritesNothing(t *testing.T) {
 	srv := sshtest.Start(t, sshtest.Options{})
 	srv.Write("legacy.txt", "uploaded with scp")
-	srv.Write(".legacy.txt.sha256", "sha256 stale 1\n") // left by v0.2, ignored
 	a := newMachine(t, srv)
 	res, err := a.e.Download(bg, "legacy.txt", a.file("legacy.txt"))
 	if err != nil {
@@ -340,7 +323,7 @@ func TestDownloadRecordsVersionAndWritesNothing(t *testing.T) {
 	if res.Hash != sha("uploaded with scp") || res.ModTime.IsZero() {
 		t.Fatalf("download must record hash and version, got %+v", res)
 	}
-	if srv.Read(".legacy.txt.sha256") != "sha256 stale 1\n" || len(internalFiles(t, srv)) != 0 {
+	if len(internalFiles(t, srv)) != 0 {
 		t.Fatal("a download must not write to the server")
 	}
 	// Now an edit goes through without a prompt.
@@ -499,7 +482,7 @@ func TestInternalTargetsRefused(t *testing.T) {
 	srv := sshtest.Start(t, sshtest.Options{})
 	a := newMachine(t, srv)
 	a.write("x", "x")
-	if _, err := a.upload("x", ".r.txt.sha256", Check); !errors.Is(err, remote.ErrInvalidPath) {
+	if _, err := a.upload("x", ".r.txt.tmp-1", Check); !errors.Is(err, remote.ErrInvalidPath) {
 		t.Fatalf("want ErrInvalidPath, got %v", err)
 	}
 }
@@ -566,8 +549,8 @@ func TestCopy(t *testing.T) {
 	if err := a.e.Copy(bg, "docs/r.txt", "other/r copy.txt"); err != nil {
 		t.Fatal(err)
 	}
-	if srv.Read("other/r copy.txt") != "v1" || len(hashFiles(t, srv)) != 0 {
-		t.Fatal("copy should have the content and no hash file")
+	if srv.Read("other/r copy.txt") != "v1" {
+		t.Fatal("copy should have the content")
 	}
 	if err := a.e.Copy(bg, "docs/r.txt", "other/r copy.txt"); !errors.Is(err, remote.ErrExists) {
 		t.Fatalf("copy must never overwrite, got %v", err)

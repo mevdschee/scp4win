@@ -122,7 +122,6 @@ func TestListHidesInternalFilesAndSorts(t *testing.T) {
 	f := setup(t)
 	writeFile(t, f.root, "b.txt", "b")
 	writeFile(t, f.root, "A.txt", "a")
-	writeFile(t, f.root, ".A.txt.sha256", "hash")
 	writeFile(t, f.root, ".A.txt.tmp-123", "tmp")
 	writeFile(t, f.root, ".A.txt.claim-456", "claim")
 	writeFile(t, f.root, ".profile", "dotfile")
@@ -182,16 +181,15 @@ func TestPathsCannotEscapeRoot(t *testing.T) {
 func TestMoveFileCreatesTargetAndPrunesSource(t *testing.T) {
 	f := setup(t)
 	writeFile(t, f.root, "a/b/report.docx", "data")
-	writeFile(t, f.root, "a/b/.report.docx.sha256", "hash")
 
 	if err := f.client.Move("a/b/report.docx", "x/y/final.docx"); err != nil {
 		t.Fatal(err)
 	}
-	if !exists(f.root, "x/y/final.docx") || exists(f.root, "x/y/.final.docx.sha256") {
-		t.Fatal("file should be at the new path, without the legacy hash file")
+	if !exists(f.root, "x/y/final.docx") {
+		t.Fatal("file should be at the new path")
 	}
 	if exists(f.root, "a") {
-		t.Fatal("empty source namespaces should be pruned (legacy hash file removed)")
+		t.Fatal("empty source namespaces should be pruned")
 	}
 }
 
@@ -243,12 +241,11 @@ func TestMoveFolder(t *testing.T) {
 func TestRename(t *testing.T) {
 	f := setup(t)
 	writeFile(t, f.root, "docs/a.txt", "a")
-	writeFile(t, f.root, "docs/.a.txt.sha256", "hash")
 	if err := f.client.Rename("docs/a.txt", "b.txt"); err != nil {
 		t.Fatal(err)
 	}
-	if !exists(f.root, "docs/b.txt") || exists(f.root, "docs/.a.txt.sha256") || exists(f.root, "docs/.b.txt.sha256") {
-		t.Fatal("rename should keep the namespace and remove the legacy hash file")
+	if !exists(f.root, "docs/b.txt") || exists(f.root, "docs/a.txt") {
+		t.Fatal("rename should keep the namespace")
 	}
 	if err := f.client.Rename("docs/b.txt", "../c.txt"); !errors.Is(err, remote.ErrInvalidPath) {
 		t.Fatalf("names with slashes must be refused, got %v", err)
@@ -258,18 +255,17 @@ func TestRename(t *testing.T) {
 func TestInternalNamesRefused(t *testing.T) {
 	f := setup(t)
 	writeFile(t, f.root, "a.txt", "a")
-	if err := f.client.Rename("a.txt", ".a.txt.sha256"); !errors.Is(err, remote.ErrInvalidPath) {
+	if err := f.client.Rename("a.txt", ".a.txt.tmp-1"); !errors.Is(err, remote.ErrInvalidPath) {
 		t.Fatalf("want ErrInvalidPath, got %v", err)
 	}
-	if err := f.client.Delete(".a.txt.sha256"); !errors.Is(err, remote.ErrInvalidPath) {
+	if err := f.client.Delete(".a.txt.claim-1"); !errors.Is(err, remote.ErrInvalidPath) {
 		t.Fatalf("want ErrInvalidPath, got %v", err)
 	}
 }
 
-func TestDeleteFileRemovesLegacyHashAndPrunes(t *testing.T) {
+func TestDeleteFilePrunes(t *testing.T) {
 	f := setup(t)
 	writeFile(t, f.root, "a/b/c.txt", "c")
-	writeFile(t, f.root, "a/b/.c.txt.sha256", "hash")
 	writeFile(t, f.root, "a/keep.txt", "k")
 	if err := f.client.Delete("a/b/c.txt"); err != nil {
 		t.Fatal(err)
@@ -285,7 +281,6 @@ func TestDeleteFileRemovesLegacyHashAndPrunes(t *testing.T) {
 func TestDeleteFolder(t *testing.T) {
 	f := setup(t)
 	writeFile(t, f.root, "p/q/r.txt", "r")
-	writeFile(t, f.root, "p/q/.r.txt.sha256", "hash")
 	if err := f.client.Delete("p"); err != nil {
 		t.Fatal(err)
 	}

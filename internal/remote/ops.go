@@ -128,8 +128,7 @@ func (c *Client) Move(from, to string) error {
 		return fmt.Errorf("move %q into itself: %w", from, ErrInvalidPath)
 	}
 
-	src, err := c.sftp.Lstat(c.abs(from))
-	if err != nil {
+	if _, err := c.sftp.Lstat(c.abs(from)); err != nil {
 		return fmt.Errorf("move %q: %w", from, err)
 	}
 	// Explicit check, because rename(2) on the server would replace an empty
@@ -148,19 +147,9 @@ func (c *Client) Move(from, to string) error {
 		c.prune(Dir(to))
 		return fmt.Errorf("move %q to %q: %w", from, to, err)
 	}
-	if !src.IsDir() {
-		c.removeLegacyHash(from)
-	}
 	c.prune(Dir(from))
 	slog.Info("moved", "from", from, "to", to)
 	return nil
-}
-
-// removeLegacyHash removes the hidden hash file that versions before v0.3
-// kept next to file p, if there is one. It is no longer used, but would keep
-// an emptied folder from being pruned.
-func (c *Client) removeLegacyHash(p string) {
-	_ = c.sftp.Remove(c.abs(Join(Dir(p), legacyHashName(Base(p)))))
 }
 
 // Delete removes a file or a folder with everything in it. Parent namespaces
@@ -178,9 +167,6 @@ func (c *Client) Delete(p string) error {
 		err = c.sftp.RemoveAll(c.abs(p))
 	} else {
 		err = c.sftp.Remove(c.abs(p))
-		if err == nil {
-			c.removeLegacyHash(p)
-		}
 	}
 	if err != nil {
 		return fmt.Errorf("delete %q: %w", p, err)

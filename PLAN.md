@@ -47,12 +47,6 @@ the claimed version's mtime when the server's own mtime is not later already.
 Along the chain of versions at one path, uploaded through the app, the mtime
 therefore always increases.
 
-SSH-Cloud before v0.3 kept a hidden hash file `.<name>.sha256` next to every
-file. These are no longer read or written. They stay hidden, a delete or move
-in the app removes the one of that file (so an emptied folder can still be
-removed), and `find <folder> -name '.*.sha256' -delete` on the server removes
-them all.
-
 ## Workflow
 
 **Download** (drag out, or double-click / "Download to..."):
@@ -180,8 +174,7 @@ renames temp to `<name> (2).<ext>` (next free number).
   sort (folders first). Files and folders whose name starts with a dot are
   hidden, in the list and the tree, unless "Show hidden files" (a check mark
   in the overflow menu, remembered in the settings) is on. Claim and temp
-  files are never shown, and neither are the `.<name>.sha256` hash files that
-  SSH-Cloud before v0.3 wrote.
+  files are never shown.
 - A plain status line at the bottom, below a thin divider: status on the
   left, item count on the right.
 - Status column: "Up to date" or "Changed on server" for files this client

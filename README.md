@@ -29,14 +29,6 @@ the Start menu, enter your server, username and remote folder, and you have a
 cloud. Log in with your SSH agent, Pageant, a key file or a password. Use "Check
 for updates" in the "..." menu to get new versions.
 
-Versions before v0.3 kept a hidden `.<name>.sha256` file next to every file.
-They are no longer used. SSH-Cloud still hides them and removes them when it
-deletes or moves a file. To remove them all at once, run this on the server:
-
-```
-find /path/to/folder -name '.*.sha256' -delete
-```
-
 ## Build
 
 ```
