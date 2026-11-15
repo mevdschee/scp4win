@@ -38,16 +38,16 @@
     "#1": {
       "0000": {
         "fixed": {
-          "file_version": "0.3.2.19",
-          "product_version": "0.3.2.19"
+          "file_version": "0.3.3.20",
+          "product_version": "0.3.3.20"
         },
         "info": {
           "0409": {
             "FileDescription": "SSH-Cloud",
-            "FileVersion": "0.3.2",
+            "FileVersion": "0.3.3",
             "OriginalFilename": "ssh-cloud.exe",
             "ProductName": "SSH-Cloud",
-            "ProductVersion": "0.3.2"
+            "ProductVersion": "0.3.3"
           }
         }
       }
