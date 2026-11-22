@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/sshtest"
-	"github.com/mevdschee/ssh-cloud/internal/transfer"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/sshtest"
+	"github.com/mevdschee/scp4win/internal/transfer"
 )
 
 var bg = context.Background()

@@ -1,6 +1,6 @@
 //go:build windows
 
-// Package ui is the windigo (Win32) user interface of SSH-Cloud: an
+// Package ui is the windigo (Win32) user interface of scp4win: an
 // Explorer-like window on top of package app.
 package ui
 
@@ -18,11 +18,11 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/mevdschee/ssh-cloud/internal/app"
-	"github.com/mevdschee/ssh-cloud/internal/config"
-	"github.com/mevdschee/ssh-cloud/internal/logging"
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/transfer"
+	"github.com/mevdschee/scp4win/internal/app"
+	"github.com/mevdschee/scp4win/internal/config"
+	"github.com/mevdschee/scp4win/internal/logging"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/transfer"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 	"github.com/rodrigocfd/windigo/win"
@@ -125,7 +125,7 @@ func Run(cfgDir string, cfg *config.Config, version string) int {
 
 func (me *Explorer) build() {
 	me.wnd = ui.NewMain(ui.OptsMain().
-		Title("SSH-Cloud").
+		Title("scp4win").
 		Size(ui.Dpi(860, 560)).
 		Style(co.WS_CAPTION | co.WS_SYSMENU | co.WS_CLIPCHILDREN | co.WS_BORDER | co.WS_VISIBLE |
 								co.WS_MINIMIZEBOX | co.WS_MAXIMIZEBOX | co.WS_SIZEBOX).
@@ -469,7 +469,7 @@ func (me *Explorer) navigate(dir string, remember bool) {
 func (me *Explorer) refresh() { me.navigate(me.dir, false) }
 
 // visible drops hidden entries (names starting with a dot, as on the server)
-// unless "Show hidden files" is on. SSH-Cloud's own files are never listed.
+// unless "Show hidden files" is on. scp4win's own files are never listed.
 func (me *Explorer) visible(entries []remote.Entry) []remote.Entry {
 	if me.cfg.ShowHidden {
 		return entries

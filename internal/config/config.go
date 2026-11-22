@@ -1,5 +1,5 @@
 // Package config stores connection profiles and settings in
-// %APPDATA%\SSH-Cloud\config.json (the user config dir on other systems).
+// %APPDATA%\scp4win\config.json (the user config dir on other systems).
 package config
 
 import (
@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
+	"github.com/mevdschee/scp4win/internal/remote"
 )
 
 // Profile is one saved connection.
@@ -41,13 +41,18 @@ type Config struct {
 	ShowHidden     bool      `json:"showHidden,omitempty"` // show files and folders whose name starts with a dot
 }
 
-// Dir returns the SSH-Cloud settings directory.
+// Dir returns the scp4win settings directory. The directory of an install
+// from before the rename (SSH-Cloud) is moved to the new name when found.
 func Dir() (string, error) {
 	base, err := os.UserConfigDir()
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(base, "SSH-Cloud"), nil
+	dir := filepath.Join(base, "scp4win")
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		os.Rename(filepath.Join(base, "SSH-Cloud"), dir) // best effort
+	}
+	return dir, nil
 }
 
 // Load reads the config file from dir. A missing file is an empty config.

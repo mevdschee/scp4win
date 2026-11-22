@@ -9,10 +9,10 @@ import (
 )
 
 // ErrInvalidPath is returned for paths that are empty where a file is needed,
-// or whose name is reserved for SSH-Cloud's own files.
+// or whose name is reserved for scp4win's own files.
 var ErrInvalidPath = errors.New("invalid path")
 
-// Suffixes of SSH-Cloud's internal files, which live next to user files as
+// Suffixes of scp4win's internal files, which live next to user files as
 // hidden dotfiles: ".<name>.tmp-<random>" and ".<name>.claim-<random>". They
 // are never shown and cannot be created, renamed or deleted directly by the user.
 const (
@@ -43,7 +43,7 @@ func Dir(p string) string {
 // Base returns the last element of a cloud path.
 func Base(p string) string { return path.Base(Clean(p)) }
 
-// IsInternal reports whether a file name belongs to SSH-Cloud itself.
+// IsInternal reports whether a file name belongs to scp4win itself.
 func IsInternal(name string) bool {
 	if !strings.HasPrefix(name, ".") {
 		return false

@@ -1,4 +1,4 @@
-module github.com/mevdschee/ssh-cloud
+module github.com/mevdschee/scp4win
 
 go 1.27.3
 

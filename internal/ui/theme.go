@@ -10,7 +10,7 @@ package ui
 // scrollbars only turn dark through two undocumented uxtheme functions,
 // which exist on Windows 10 1809 and later.
 //
-// SSHCLOUD_THEME=dark (or light) overrides the system setting, which helps
+// SCP4WIN_THEME=dark (or light) overrides the system setting, which helps
 // to try the dark look under Wine.
 
 import (
@@ -145,7 +145,7 @@ func init() {
 // systemDark reports whether Windows apps should be dark. With a High
 // Contrast theme the app stays light, which uses the system colours.
 func systemDark() bool {
-	switch os.Getenv("SSHCLOUD_THEME") {
+	switch os.Getenv("SCP4WIN_THEME") {
 	case "dark":
 		return true
 	case "light":

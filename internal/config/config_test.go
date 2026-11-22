@@ -3,7 +3,7 @@ package config
 import (
 	"os"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
+	"github.com/mevdschee/scp4win/internal/remote"
 	"path/filepath"
 	"testing"
 )

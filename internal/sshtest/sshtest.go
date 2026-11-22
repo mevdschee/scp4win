@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
+	"github.com/mevdschee/scp4win/internal/remote"
 	"github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/knownhosts"

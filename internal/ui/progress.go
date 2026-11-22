@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/mevdschee/ssh-cloud/internal/app"
-	"github.com/mevdschee/ssh-cloud/internal/logging"
+	"github.com/mevdschee/scp4win/internal/app"
+	"github.com/mevdschee/scp4win/internal/logging"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 	"github.com/rodrigocfd/windigo/win"

@@ -1,4 +1,4 @@
-// Package app is the window-independent part of the SSH-Cloud explorer: it
+// Package app is the window-independent part of the scp4win explorer: it
 // owns the connection, lists namespaces (including virtual folders that only
 // exist in the view until a file is uploaded into them) and runs uploads and
 // downloads of whole selections, asking a callback when a collision needs the
@@ -18,10 +18,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mevdschee/ssh-cloud/internal/dragdata"
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/transfer"
-	"github.com/mevdschee/ssh-cloud/internal/transferlog"
+	"github.com/mevdschee/scp4win/internal/dragdata"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/transfer"
+	"github.com/mevdschee/scp4win/internal/transferlog"
 )
 
 // App is one open connection profile.

@@ -1,4 +1,4 @@
-// Package logging writes SSH-Cloud's debug log to a file in the settings
+// Package logging writes scp4win's debug log to a file in the settings
 // directory. All packages log through log/slog; this package only sets up
 // the destination. Crashes (unrecovered panics) are written to the same file.
 package logging
@@ -12,16 +12,16 @@ import (
 	"runtime/debug"
 )
 
-// maxSize is the size at which the log is rotated to ssh-cloud.log.old.
+// maxSize is the size at which the log is rotated to scp4win.log.old.
 const maxSize = 5 << 20
 
-// Setup opens <dir>/ssh-cloud.log at debug level and makes it the default
+// Setup opens <dir>/scp4win.log at debug level and makes it the default
 // slog logger. It returns the log file path and a close function.
 func Setup(dir string) (string, func(), error) {
 	if err := os.MkdirAll(dir, 0o700); err != nil {
 		return "", nil, err
 	}
-	file := filepath.Join(dir, "ssh-cloud.log")
+	file := filepath.Join(dir, "scp4win.log")
 	if fi, err := os.Stat(file); err == nil && fi.Size() > maxSize {
 		_ = os.Rename(file, file+".old")
 	}

@@ -27,8 +27,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/transferlog"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/transferlog"
 )
 
 // Mode selects what an upload does with an existing, different version.

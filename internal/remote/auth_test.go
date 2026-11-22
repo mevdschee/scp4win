@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/sshtest"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/sshtest"
 	"golang.org/x/crypto/ssh"
 )
 

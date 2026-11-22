@@ -12,7 +12,7 @@ import (
 )
 
 // Raw operations are the building blocks of the transfer protocol. Unlike the
-// user-facing operations they accept SSH-Cloud's internal file names (temp and
+// user-facing operations they accept scp4win's internal file names (temp and
 // claim files) and do no pruning or bookkeeping. Paths are cloud paths and are
 // cleaned, so they never leave the root.
 
@@ -100,8 +100,8 @@ func (c *Client) RenameReplaces() (bool, error) {
 
 func (c *Client) probeRename() (bool, error) {
 	id := randomID()
-	a := ".sshcloud-probe" + tmpMarker + id + "-a"
-	b := ".sshcloud-probe" + tmpMarker + id + "-b"
+	a := ".scp4win-probe" + tmpMarker + id + "-a"
+	b := ".scp4win-probe" + tmpMarker + id + "-b"
 	defer c.sftp.Remove(c.abs(a))
 	defer c.sftp.Remove(c.abs(b))
 	for _, p := range []string{a, b} {

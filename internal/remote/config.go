@@ -1,4 +1,4 @@
-// Package remote is the SSH/SFTP layer of SSH-Cloud. It connects to the server
+// Package remote is the SSH/SFTP layer of scp4win. It connects to the server
 // and performs all metadata operations (list, stat, rename, move, delete)
 // directly on the server. Paths passed to this package are always relative to
 // the cloud root and use forward slashes, for example "docs/2026/report.docx".

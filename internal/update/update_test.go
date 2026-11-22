@@ -40,14 +40,14 @@ func TestParseRelease(t *testing.T) {
 		"tag_name": "v0.3.0", "draft": false, "prerelease": false,
 		"assets": [
 			{"name": "notes.txt", "browser_download_url": "https://example.com/notes.txt", "size": 10},
-			{"name": "ssh-cloud-0.3.0-amd64.msi", "browser_download_url": "https://github.com/mevdschee/ssh-cloud/releases/download/v0.3.0/ssh-cloud-0.3.0-amd64.msi", "size": 3912192}
+			{"name": "scp4win-0.3.0-amd64.msi", "browser_download_url": "https://github.com/mevdschee/scp4win/releases/download/v0.3.0/scp4win-0.3.0-amd64.msi", "size": 3912192}
 		]}`)
 	r, ok := ParseRelease(data)
 	if !ok {
 		t.Fatal("no release found")
 	}
-	want := Release{Version: "0.3.0", MsiName: "ssh-cloud-0.3.0-amd64.msi", MsiSize: 3912192,
-		MsiURL: "https://github.com/mevdschee/ssh-cloud/releases/download/v0.3.0/ssh-cloud-0.3.0-amd64.msi"}
+	want := Release{Version: "0.3.0", MsiName: "scp4win-0.3.0-amd64.msi", MsiSize: 3912192,
+		MsiURL: "https://github.com/mevdschee/scp4win/releases/download/v0.3.0/scp4win-0.3.0-amd64.msi"}
 	if r != want {
 		t.Errorf("got %+v", r)
 	}

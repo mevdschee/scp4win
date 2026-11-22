@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/transferlog"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/transferlog"
 )
 
 // send streams a local file into a new remote file, hashing what it sends.
@@ -86,7 +86,7 @@ func (e *Engine) download(ctx context.Context, p, localPath string) (Result, err
 	if err := os.MkdirAll(filepath.Dir(localPath), 0o755); err != nil {
 		return Result{}, err
 	}
-	part := localPath + ".sshcloud-part"
+	part := localPath + ".scp4win-part"
 	dst, err := os.OpenFile(part, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
 		return Result{}, err

@@ -14,7 +14,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mevdschee/ssh-cloud/internal/icons"
+	"github.com/mevdschee/scp4win/internal/icons"
 )
 
 func main() {

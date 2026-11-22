@@ -11,9 +11,9 @@ package ui
 import (
 	"log/slog"
 
-	"github.com/mevdschee/ssh-cloud/internal/app"
-	"github.com/mevdschee/ssh-cloud/internal/config"
-	"github.com/mevdschee/ssh-cloud/internal/remote"
+	"github.com/mevdschee/scp4win/internal/app"
+	"github.com/mevdschee/scp4win/internal/config"
+	"github.com/mevdschee/scp4win/internal/remote"
 )
 
 // session is one tab.

@@ -3,7 +3,7 @@
 package ui
 
 import (
-	"github.com/mevdschee/ssh-cloud/internal/transferlog"
+	"github.com/mevdschee/scp4win/internal/transferlog"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 )

@@ -11,9 +11,9 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/mevdschee/ssh-cloud/internal/app"
-	"github.com/mevdschee/ssh-cloud/internal/logging"
-	"github.com/mevdschee/ssh-cloud/internal/update"
+	"github.com/mevdschee/scp4win/internal/app"
+	"github.com/mevdschee/scp4win/internal/logging"
+	"github.com/mevdschee/scp4win/internal/update"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 )
@@ -51,7 +51,7 @@ func (me *Explorer) checkForUpdates() {
 				ui.MsgError(me.wnd, "Update", "Could not check for updates", err.Error())
 			case !ok || !update.Newer(r.Version, me.version):
 				slog.Info("no update", "latest", r.Version, "current", me.version)
-				ui.MsgOk(me.wnd, "Update", "SSH-Cloud is up to date", "You have the latest version ("+me.version+").")
+				ui.MsgOk(me.wnd, "Update", "scp4win is up to date", "You have the latest version ("+me.version+").")
 			default:
 				slog.Info("update available", "latest", r.Version, "current", me.version)
 				me.offerUpdate(r)
@@ -61,8 +61,8 @@ func (me *Explorer) checkForUpdates() {
 }
 
 func (me *Explorer) offerUpdate(r update.Release) {
-	if !ui.MsgOkCancel(me.wnd, "Update", "SSH-Cloud "+r.Version+" is available",
-		fmt.Sprintf("You have %s. Download and install %s now? SSH-Cloud closes during the installation.",
+	if !ui.MsgOkCancel(me.wnd, "Update", "scp4win "+r.Version+" is available",
+		fmt.Sprintf("You have %s. Download and install %s now? scp4win closes during the installation.",
 			me.version, r.Version), "Install") {
 		return
 	}
@@ -83,8 +83,8 @@ func (me *Explorer) offerUpdate(r update.Release) {
 	}
 	if err == nil {
 		// msiexec shows the installer; the MSI replaces the running version,
-		// so close to release ssh-cloud.exe.
-		log := filepath.Join(os.TempDir(), "ssh-cloud-update.log")
+		// so close to release scp4win.exe.
+		log := filepath.Join(os.TempDir(), "scp4win-update.log")
 		err = exec.Command("msiexec", "/i", path, "/l*v", log).Start()
 	}
 	if err != nil {

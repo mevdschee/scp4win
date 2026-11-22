@@ -1,4 +1,4 @@
-// Command ssh-cloud is the SSH-Cloud explorer for Windows.
+// Command scp4win is the scp4win explorer for Windows.
 package main
 
 import (
@@ -8,9 +8,9 @@ import (
 	"runtime"
 	"runtime/debug"
 
-	"github.com/mevdschee/ssh-cloud/internal/config"
-	"github.com/mevdschee/ssh-cloud/internal/logging"
-	"github.com/mevdschee/ssh-cloud/internal/ui"
+	"github.com/mevdschee/scp4win/internal/config"
+	"github.com/mevdschee/scp4win/internal/logging"
+	"github.com/mevdschee/scp4win/internal/ui"
 	wui "github.com/rodrigocfd/windigo/ui"
 	"github.com/rodrigocfd/windigo/win"
 )
@@ -23,12 +23,12 @@ func main() {
 
 	dir, err := config.Dir()
 	if err != nil {
-		wui.MsgError(nil, "SSH-Cloud", "No settings folder", err.Error())
+		wui.MsgError(nil, "scp4win", "No settings folder", err.Error())
 		os.Exit(1)
 	}
 	logFile, closeLog, err := logging.Setup(dir)
 	if err != nil {
-		wui.MsgError(nil, "SSH-Cloud", "Could not open the log file", err.Error())
+		wui.MsgError(nil, "scp4win", "Could not open the log file", err.Error())
 	} else {
 		defer closeLog()
 	}
@@ -44,7 +44,7 @@ func main() {
 	defer func() {
 		if r := recover(); r != nil {
 			slog.Error("crash", "panic", fmt.Sprint(r), "stack", string(debug.Stack()))
-			wui.MsgError(nil, "SSH-Cloud", "SSH-Cloud crashed", fmt.Sprintf("%v\n\nDetails are in %s", r, logFile))
+			wui.MsgError(nil, "scp4win", "scp4win crashed", fmt.Sprintf("%v\n\nDetails are in %s", r, logFile))
 			os.Exit(2)
 		}
 	}()
@@ -58,7 +58,7 @@ func main() {
 	cfg, err := config.Load(dir)
 	if err != nil {
 		slog.Error("read settings", "err", err)
-		wui.MsgError(nil, "SSH-Cloud", "Could not read settings", err.Error())
+		wui.MsgError(nil, "scp4win", "Could not read settings", err.Error())
 		cfg = &config.Config{}
 	}
 	code := ui.Run(dir, cfg, version)

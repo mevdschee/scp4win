@@ -7,10 +7,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mevdschee/ssh-cloud/internal/app"
-	"github.com/mevdschee/ssh-cloud/internal/config"
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/transfer"
+	"github.com/mevdschee/scp4win/internal/app"
+	"github.com/mevdschee/scp4win/internal/config"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/transfer"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 )

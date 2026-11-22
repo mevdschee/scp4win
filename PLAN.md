@@ -1,4 +1,4 @@
-# SSH-Cloud: Plan
+# scp4win: Plan
 
 A Windows app (Go + [windigo](https://github.com/rodrigocfd/windigo)) that shows an
 SSH/SFTP server as an Explorer-like window. Browsing, renaming, moving and
@@ -37,7 +37,7 @@ Renames, moves and claims keep the mtime, so they keep the version.
 
 The transfer list records, for every download and upload, the SHA-256 of the
 content and the server version (size and mtime) that was read or put in place.
-A transfer list entry without a server version (written by SSH-Cloud before
+A transfer list entry without a server version (written by scp4win before
 v0.3) means "unknown version".
 
 One second is coarse: two uploads within the same second with the same size
@@ -115,7 +115,7 @@ renames temp to `<name> (2).<ext>` (next free number).
 
 ## Connections and login
 
-- Saved connections in `%APPDATA%\SSH-Cloud\config.json`, managed in a
+- Saved connections in `%APPDATA%\scp4win\config.json`, managed in a
   Connections dialog (connect, new, edit, delete). Each has a stable ID, so a
   rename keeps its transfer list. The app connects to the last used one at
   startup and opens the manager when that fails.
@@ -132,7 +132,7 @@ renames temp to `<name> (2).<ext>` (next free number).
 
 ## Transfer list
 
-- Local, per connection profile, append-only (`%APPDATA%\SSH-Cloud\`).
+- Local, per connection profile, append-only (`%APPDATA%\scp4win\`).
 - Entry: time, direction, remote path, local path, size, SHA-256, server mtime,
   result.
 - Shown in a Transfers window, opened from the "..." menu (newest first,
@@ -146,7 +146,7 @@ renames temp to `<name> (2).<ext>` (next free number).
   through TBSTYLE_CUSTOMERASE; Windows draws the buttons), the Explorer theme
   on the tree and list, Segoe UI Variable (the system font under Wine, which
   lacks it), a white content area with thin grey dividers, and a rounded
-  window with a Mica title bar. The title is always "SSH-Cloud" and the window
+  window with a Mica title bar. The title is always "scp4win" and the window
   shows the app icon.
 - Tabs in a grey band below the title bar, one per open connection, each with
   its own folder, history and listing. Drawn like Explorer's (GDI, double
@@ -205,7 +205,7 @@ renames temp to `<name> (2).<ext>` (next free number).
 ## Updates
 
 "Check for updates" in the "..." menu checks the latest GitHub
-release on request. When it is newer, SSH-Cloud downloads the MSI in the
+release on request. When it is newer, scp4win downloads the MSI in the
 progress window, starts `msiexec` and closes. Nothing is checked
 automatically and there is no setting for it. Development builds ("dev")
 do not update.
@@ -220,7 +220,7 @@ the icon credits. It has no buttons; Esc, Enter or the close button close it.
 
 ## Logging
 
-All packages log through `log/slog` to `%APPDATA%\SSH-Cloud\ssh-cloud.log`
+All packages log through `log/slog` to `%APPDATA%\scp4win\scp4win.log`
 (rotated at 5 MB): connects, login method and keys used (by fingerprint),
 host key decisions, server capabilities, every move, delete, upload, download
 and copy, conflicts and the user's choices, reconnects and
@@ -230,8 +230,8 @@ passphrases are never logged.
 ## Architecture
 
 ```
-cmd/ssh-cloud/         the Windows program (manifest for common controls v6)
-cmd/sshcloud-cli/      command-line tool for testing against a real server
+cmd/scp4win/           the Windows program (manifest for common controls v6)
+cmd/scp4win-cli/       command-line tool for testing against a real server
 internal/remote/       SSH/SFTP connection, login methods, Pageant, atomic ops,
                        folder create/prune, copy-data
 internal/transfer/     download, upload, copy, versions, collision check, progress

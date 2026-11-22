@@ -13,9 +13,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/sshtest"
-	"github.com/mevdschee/ssh-cloud/internal/transferlog"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/sshtest"
+	"github.com/mevdschee/scp4win/internal/transferlog"
 )
 
 var bg = context.Background()
@@ -337,7 +337,7 @@ func TestEntryWithoutVersionPrompts(t *testing.T) {
 	srv := sshtest.Start(t, sshtest.Options{})
 	a := newMachine(t, srv)
 	srv.Write("r.txt", "v1")
-	// An entry written by SSH-Cloud before v0.3 has no mtime.
+	// An entry written by scp4win before v0.3 has no mtime.
 	if err := a.e.log.Add(transferlog.Entry{Direction: transferlog.Download, RemotePath: "r.txt", LocalPath: a.file("r.txt"),
 		Size: 2, Hash: sha("v1"), Result: transferlog.Done}); err != nil {
 		t.Fatal(err)

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   MSI definition, built with wixl (msitools) by release.sh:
-  wixl -a x64 -D Version=x.y.z -D FileVersion=x.y.z.b -D ExePath=... -D IconPath=... -o out.msi ssh-cloud.wxs
-  It installs per user, without admin rights, into %LOCALAPPDATA%\Programs\SSH-Cloud.
+  wixl -a x64 -D Version=x.y.z -D FileVersion=x.y.z.b -D ExePath=... -D IconPath=... -o out.msi scp4win.wxs
+  It installs per user, without admin rights, into %LOCALAPPDATA%\Programs\scp4win.
   The UpgradeCode must never change, so new versions replace old ones.
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="SSH-Cloud" Language="1033" Version="$(var.Version)"
+  <Product Id="*" Name="scp4win" Language="1033" Version="$(var.Version)"
            Manufacturer="Maurits van der Schee" UpgradeCode="A0F6BE47-E90C-4943-A201-5A906FEA1DCF">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perUser"
-             Description="SSH-Cloud $(var.Version)" Comments="Cloud storage over SSH for Windows"/>
-    <Media Id="1" Cabinet="sshcloud.cab" EmbedCab="yes"/>
+             Description="scp4win $(var.Version)" Comments="Cloud storage over SSH for Windows"/>
+    <Media Id="1" Cabinet="scp4win.cab" EmbedCab="yes"/>
     <MajorUpgrade AllowSameVersionUpgrades="yes"
-                  DowngradeErrorMessage="A newer version of SSH-Cloud is already installed."/>
+                  DowngradeErrorMessage="A newer version of scp4win is already installed."/>
 
-    <Icon Id="ssh_cloud.ico" SourceFile="$(var.IconPath)"/>
-    <Property Id="ARPPRODUCTICON" Value="ssh_cloud.ico"/>
-    <Property Id="ARPURLINFOABOUT" Value="https://github.com/mevdschee/ssh-cloud"/>
+    <Icon Id="scp4win.ico" SourceFile="$(var.IconPath)"/>
+    <Property Id="ARPPRODUCTICON" Value="scp4win.ico"/>
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/mevdschee/scp4win"/>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="LocalAppDataFolder">
         <Directory Id="ProgramsFolder" Name="Programs">
-          <Directory Id="INSTALLDIR" Name="SSH-Cloud">
+          <Directory Id="INSTALLDIR" Name="scp4win">
             <!-- Per-user components need a registry key path, not the file. -->
             <Component Id="MainExecutable" Guid="*" Win64="yes">
               <!-- The version must be set: an unversioned file never replaces
                    the versioned exe of the old install during an upgrade, and
                    removing the old version then deletes it. -->
-              <File Id="ssh_cloud.exe" Name="ssh-cloud.exe" Source="$(var.ExePath)"
+              <File Id="scp4win.exe" Name="scp4win.exe" Source="$(var.ExePath)"
                     DefaultVersion="$(var.FileVersion)"/>
               <RemoveFolder Id="RemoveInstallDir" On="uninstall"/>
-              <RegistryValue Root="HKCU" Key="Software\SSH-Cloud" Name="exe"
+              <RegistryValue Root="HKCU" Key="Software\scp4win" Name="exe"
                              Type="integer" Value="1" KeyPath="yes"/>
             </Component>
           </Directory>
@@ -38,9 +38,9 @@
       </Directory>
       <Directory Id="ProgramMenuFolder">
         <Component Id="StartMenuShortcut" Guid="*">
-          <Shortcut Id="sshCloudShortcut" Name="SSH-Cloud" Description="Cloud storage over SSH"
-                    Target="[INSTALLDIR]ssh-cloud.exe" WorkingDirectory="INSTALLDIR"/>
-          <RegistryValue Root="HKCU" Key="Software\SSH-Cloud" Name="installed"
+          <Shortcut Id="scp4winShortcut" Name="scp4win" Description="Cloud storage over SSH"
+                    Target="[INSTALLDIR]scp4win.exe" WorkingDirectory="INSTALLDIR"/>
+          <RegistryValue Root="HKCU" Key="Software\scp4win" Name="installed"
                          Type="integer" Value="1" KeyPath="yes"/>
         </Component>
       </Directory>

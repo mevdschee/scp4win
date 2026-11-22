@@ -5,8 +5,8 @@ package ui
 import (
 	"strings"
 
-	"github.com/mevdschee/ssh-cloud/internal/logging"
-	"github.com/mevdschee/ssh-cloud/internal/remote"
+	"github.com/mevdschee/scp4win/internal/logging"
+	"github.com/mevdschee/scp4win/internal/remote"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 	"github.com/rodrigocfd/windigo/win"

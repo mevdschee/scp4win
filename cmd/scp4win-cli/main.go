@@ -1,14 +1,14 @@
-// Command sshcloud-cli is a small test harness for the remote layer. It runs
+// Command scp4win-cli is a small test harness for the remote layer. It runs
 // one operation against a real server:
 //
-//	sshcloud-cli -host example.com -user team -root /srv/cloud ls docs
-//	sshcloud-cli ... stat docs/report.docx
-//	sshcloud-cli ... mv docs/report.docx archive/report.docx
-//	sshcloud-cli ... rename docs/report.docx final.docx
-//	sshcloud-cli ... rm docs/old
-//	sshcloud-cli ... mkdir docs/new
-//	sshcloud-cli ... get docs/report.docx report.docx
-//	sshcloud-cli ... put report.docx docs/report.docx [replace|keep-both]
+//	scp4win-cli -host example.com -user team -root /srv/cloud ls docs
+//	scp4win-cli ... stat docs/report.docx
+//	scp4win-cli ... mv docs/report.docx archive/report.docx
+//	scp4win-cli ... rename docs/report.docx final.docx
+//	scp4win-cli ... rm docs/old
+//	scp4win-cli ... mkdir docs/new
+//	scp4win-cli ... get docs/report.docx report.docx
+//	scp4win-cli ... put report.docx docs/report.docx [replace|keep-both]
 //
 // get and put use the same transfer list and collision check as the app; the
 // list is kept per host in the user's config directory.
@@ -24,9 +24,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mevdschee/ssh-cloud/internal/remote"
-	"github.com/mevdschee/ssh-cloud/internal/transfer"
-	"github.com/mevdschee/ssh-cloud/internal/transferlog"
+	"github.com/mevdschee/scp4win/internal/remote"
+	"github.com/mevdschee/scp4win/internal/transfer"
+	"github.com/mevdschee/scp4win/internal/transferlog"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
 )
@@ -42,7 +42,7 @@ func main() {
 	flag.StringVar(&cfg.KeyFile, "key", "", "private key file (with -auth keyfile)")
 	flag.StringVar(&cfg.KnownHostsFile, "known-hosts", filepath.Join(home, ".ssh", "known_hosts"), "known_hosts file")
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, "usage: sshcloud-cli [flags] ls|stat|mv|rename|rm|mkdir|get|put args...")
+		fmt.Fprintln(os.Stderr, "usage: scp4win-cli [flags] ls|stat|mv|rename|rm|mkdir|get|put args...")
 		flag.PrintDefaults()
 	}
 	flag.Parse()
@@ -64,7 +64,7 @@ func main() {
 	defer c.Close()
 
 	logDir, _ := os.UserConfigDir()
-	log, err := transferlog.Open(filepath.Join(logDir, "SSH-Cloud", "transfers-cli-"+cfg.Host+".jsonl"))
+	log, err := transferlog.Open(filepath.Join(logDir, "scp4win", "transfers-cli-"+cfg.Host+".jsonl"))
 	if err != nil {
 		fail(err)
 	}

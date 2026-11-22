@@ -15,15 +15,15 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/mevdschee/ssh-cloud/internal/icons"
-	"github.com/mevdschee/ssh-cloud/internal/update"
+	"github.com/mevdschee/scp4win/internal/icons"
+	"github.com/mevdschee/scp4win/internal/update"
 	"github.com/rodrigocfd/windigo/co"
 	"github.com/rodrigocfd/windigo/ui"
 	"github.com/rodrigocfd/windigo/win"
 )
 
 const (
-	repoURL = "https://github.com/mevdschee/ssh-cloud"
+	repoURL = "https://github.com/mevdschee/scp4win"
 	author  = "Maurits van der Schee"
 )
 
@@ -69,7 +69,7 @@ func appIconList(size int) uintptr {
 
 // showAbout shows the About window.
 func showAbout(parent ui.Parent, version string) {
-	wnd := newModal(parent, ui.OptsModal().Title("About SSH-Cloud").Size(ui.Dpi(460, 232)))
+	wnd := newModal(parent, ui.OptsModal().Title("About scp4win").Size(ui.Dpi(460, 232)))
 	x, w := 132, 310
 	text := func(t string, y, h int, style co.SS) *ui.Static {
 		return ui.NewStatic(wnd, ui.OptsStatic().Text(t).Position(ui.Dpi(x, y)).Size(ui.Dpi(w, h)).
@@ -80,7 +80,7 @@ func showAbout(parent ui.Parent, version string) {
 	if !update.IsRelease(version) {
 		ver = "Development build (" + version + ")"
 	}
-	title := text("SSH-Cloud", 20, 34, 0)
+	title := text("scp4win", 20, 34, 0)
 	text(ver, 58, 20, 0)
 	text("The ultimate simple cloud storage client.", 86, 20, 0)
 	text(fmt.Sprintf("© %d %s", max(time.Now().Year(), 2026), author), 114, 20, 0)

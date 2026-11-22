@@ -40,7 +40,7 @@ func entryOf(p string, fi os.FileInfo) Entry {
 }
 
 // List returns the visible entries of a namespace: folders first, then files,
-// each sorted case-insensitively by name. SSH-Cloud's internal files are
+// each sorted case-insensitively by name. scp4win's internal files are
 // hidden.
 func (c *Client) List(dir string) ([]Entry, error) {
 	dir = Clean(dir)

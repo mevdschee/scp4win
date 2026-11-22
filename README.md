@@ -1,11 +1,11 @@
-# SSH-Cloud
+# scp4win
 
 The ultimate simple cloud storage client. As simple as it gets.
 
 Your cloud is any server you can SSH into. No sync engine, no daemon, no
 database, no vendor. Just a Windows window on a folder on your server.
 
-![SSH-Cloud](screenshot.png)
+![scp4win](screenshot.png)
 
 - **Browse** the server like Windows Explorer: rename, move, copy and delete
   happen directly on the server.
@@ -13,7 +13,7 @@ database, no vendor. Just a Windows window on a folder on your server.
   default application.
 - **Work on a file:** drag it out, edit it, drag it back.
 - **Never lose work:** if someone changed the file in the meantime, or you
-  upload a different file with the same name, SSH-Cloud asks before it
+  upload a different file with the same name, scp4win asks before it
   overwrites. No locks, no conflicts hidden from you.
 - **Nothing to install on the server:** plain OpenSSH (SFTP) is all it needs,
   and it keeps nothing there but your files.
@@ -23,8 +23,8 @@ database, no vendor. Just a Windows window on a folder on your server.
 ## Get started
 
 You need to be on Windows 11. Install the MSI from the
-[releases](https://github.com/mevdschee/ssh-cloud/releases). It installs for
-your user only and does not need admin rights. Run SSH-Cloud from
+[releases](https://github.com/mevdschee/scp4win/releases). It installs for
+your user only and does not need admin rights. Run scp4win from
 the Start menu, enter your server, username and remote folder, and you have a
 cloud. Log in with your SSH agent, Pageant, a key file or a password. Use "Check
 for updates" in the "..." menu to get new versions.
@@ -34,13 +34,13 @@ for updates" in the "..." menu to get new versions.
 ```
 go install github.com/tc-hib/go-winres@latest
 go test ./...            # runs on Linux, except for dragging files out
-./run.sh                 # build ssh-cloud.exe and run it with Wine
+./run.sh                 # build scp4win.exe and run it with Wine
 ./release.sh [minor]     # build the MSI and publish a GitHub release
 ```
 
 ## Why? Other tools
 
-There are great open source tools for files on a SFTP server. SSH-Cloud exists
+There are great open source tools for files on a SFTP server. scp4win exists
 because none of them is as simple and easy to use and learn.
 
 - **File transfer clients:** [WinSCP](https://winscp.net),
@@ -63,7 +63,7 @@ Any of these projects has more features and a more complicated user interface.
 
 ## To do
 
-SSH-Cloud works, but has seen little testing outside of the happy path. Things
+scp4win works, but has seen little testing outside of the happy path. Things
 that still need to be tested properly:
 
 - **Many files:** folders with thousands of files and deep folder trees, both

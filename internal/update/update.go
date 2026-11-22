@@ -1,4 +1,4 @@
-// Package update checks GitHub for a newer SSH-Cloud release and downloads
+// Package update checks GitHub for a newer scp4win release and downloads
 // its MSI (ported from otp4win). Installing is left to msiexec.
 package update
 
@@ -16,7 +16,7 @@ import (
 )
 
 // LatestReleaseURL is the GitHub API endpoint for the newest release.
-const LatestReleaseURL = "https://api.github.com/repos/mevdschee/ssh-cloud/releases/latest"
+const LatestReleaseURL = "https://api.github.com/repos/mevdschee/scp4win/releases/latest"
 
 // Release is the part of the GitHub release JSON the update check needs.
 type Release struct {
@@ -116,7 +116,7 @@ func httpGet(ctx context.Context, url, current string, limit int64) ([]byte, err
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/vnd.github+json")
-	req.Header.Set("User-Agent", "ssh-cloud/"+current)
+	req.Header.Set("User-Agent", "scp4win/"+current)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
