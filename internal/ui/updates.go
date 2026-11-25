@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/mevdschee/scp4win/internal/app"
 	"github.com/mevdschee/scp4win/internal/logging"
@@ -60,7 +61,27 @@ func (me *Explorer) checkForUpdates() {
 	}()
 }
 
+// installed reports whether this is the copy the MSI installed, in
+// %LOCALAPPDATA%\Programs\scp4win, and not the portable exe. A portable copy
+// cannot update itself: the MSI would install a second copy next to it.
+func installed() bool {
+	exe, err := os.Executable()
+	if err != nil {
+		return false
+	}
+	dir := filepath.Join(os.Getenv("LOCALAPPDATA"), "Programs", "scp4win")
+	return strings.EqualFold(filepath.Clean(filepath.Dir(exe)), filepath.Clean(dir))
+}
+
 func (me *Explorer) offerUpdate(r update.Release) {
+	if !installed() {
+		if ui.MsgOkCancel(me.wnd, "Update", "scp4win "+r.Version+" is available",
+			fmt.Sprintf("You have %s. This copy is not installed, so it cannot update itself. Open the download page?",
+				me.version), "Open") {
+			openURL(me.wnd.Hwnd(), repoURL+"/releases/latest")
+		}
+		return
+	}
 	if !ui.MsgOkCancel(me.wnd, "Update", "scp4win "+r.Version+" is available",
 		fmt.Sprintf("You have %s. Download and install %s now? scp4win closes during the installation.",
 			me.version, r.Version), "Install") {

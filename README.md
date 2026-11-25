@@ -29,13 +29,31 @@ the Start menu, enter your server, username and remote folder, and you have a
 cloud. Log in with your SSH agent, Pageant, a key file or a password. Use "Check
 for updates" in the "..." menu to get new versions.
 
+To use it without installing, download `scp4win-<version>-amd64.exe` instead
+and run it from anywhere. It is the same program the installer installs. The
+settings still go to `%APPDATA%\scp4win`, and "Check for updates" opens the
+download page instead of installing. For Windows on ARM there is
+`scp4win-<version>-arm64.exe`, a native build that is only available as a
+portable exe; the installer works there too, but runs the amd64 build
+emulated.
+
+Each release has a `SHA256SUMS` file. To check a download, compare its hash
+with the one listed there, for example in PowerShell:
+
+    Get-FileHash scp4win-<version>-amd64.exe
+
+The files are not signed, so SmartScreen and some virus scanners may warn
+about them, as they do for many unsigned programs. If one does, check the
+hash first. The source and the build script are in this repository, so you can
+also build the exe yourself.
+
 ## Build
 
 ```
 go install github.com/tc-hib/go-winres@latest
 go test ./...            # runs on Linux, except for dragging files out
 ./run.sh                 # build scp4win.exe and run it with Wine
-./release.sh [minor]     # build the MSI and publish a GitHub release
+./release.sh [minor]     # build the MSI and the portable exes, publish a GitHub release
 ```
 
 ## Why? Other tools
