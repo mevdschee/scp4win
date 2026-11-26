@@ -42,10 +42,15 @@ with the one listed there, for example in PowerShell:
 
     Get-FileHash scp4win-<version>-amd64.exe
 
-The files are not signed, so SmartScreen and some virus scanners may warn
-about them, as they do for many unsigned programs. If one does, check the
-hash first. The source and the build script are in this repository, so you can
-also build the exe yourself.
+### Code signing
+
+Since version 0.3.7 the installer and the exes are signed with a Certum code
+signing certificate issued to Maussoft B.V. To check, right-click the file in
+Explorer, choose Properties and open the "Digital Signatures" tab. SmartScreen
+may still warn about a new release until enough people have downloaded it
+("More info", "Run anyway"). Do not run a file that is not signed by Maussoft
+B.V. The source and the build script are in this repository, so you can also
+build the exe yourself.
 
 ## Build
 
@@ -55,6 +60,10 @@ go test ./...            # runs on Linux, except for dragging files out
 ./run.sh                 # build scp4win.exe and run it with Wine
 ./release.sh [minor]     # build the MSI and the portable exes, publish a GitHub release
 ```
+
+`release.sh` signs the exes and the MSI with jsign and the Certum certificate
+in SimplySign; start SimplySign Desktop and connect it first. The settings are
+at its top.
 
 ## Why? Other tools
 
