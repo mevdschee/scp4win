@@ -38,16 +38,16 @@
     "#1": {
       "0000": {
         "fixed": {
-          "file_version": "0.3.6.23",
-          "product_version": "0.3.6.23"
+          "file_version": "0.3.7.24",
+          "product_version": "0.3.7.24"
         },
         "info": {
           "0409": {
             "FileDescription": "scp4win",
-            "FileVersion": "0.3.6",
+            "FileVersion": "0.3.7",
             "OriginalFilename": "scp4win.exe",
             "ProductName": "scp4win",
-            "ProductVersion": "0.3.6"
+            "ProductVersion": "0.3.7"
           }
         }
       }
