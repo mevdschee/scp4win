@@ -61,9 +61,10 @@ go test ./...            # runs on Linux, except for dragging files out
 ./release.sh [minor]     # build the MSI and the portable exes, publish a GitHub release
 ```
 
-`release.sh` signs the exes and the MSI with jsign and the Certum certificate
-in SimplySign; start SimplySign Desktop and connect it first. The settings are
-at its top.
+`release.sh` signs the exes and the MSI with
+[ssctl](https://github.com/mevdschee/simplysign-go) and the Certum certificate
+in SimplySign; run `ssctl login` first and log in with a token from the
+SimplySign mobile app. SimplySign Desktop is not needed.
 
 ## Why? Other tools
 
